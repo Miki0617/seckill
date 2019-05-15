@@ -1,0 +1,9 @@
+0425
+Q: html 中利用 link 无法导入外部 css 文件
+A:将 href 误拼写成 herf
+
+Q: XXX was expecting 'null', 'true', 'false' or NaN
+A： 在 ajax 请求中的data后用 JSON.stringify() 包围
+
+Q:前端倒计时时getTime多8个小时
+A

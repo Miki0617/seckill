@@ -1,0 +1,101 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link href="static/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="static/assets/global/css/components.css" rel="stylesheet" type="text/css"/>
+    <link href="static/assets/admin/pages/css/login.css" rel="stylesheet" type="text/css"/>
+    <script src="static/assets/global/plugins/jquery-1.11.0.min.js" type="text/javascript"></script>
+</head>
+
+<body class="login">
+    <div class="content">
+        <h3 class="form-title">用户登录</h3>
+
+        <div class="form-group">
+            <label class="control-label">手机号</label>
+            <div>
+                <input class="form-control" type="text" placeholder="手机号" name="telphone" id="telphone"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">密码</label>
+            <div>
+                <input class="form-control" type="password" placeholder="密码" name="passwd" id="passwd"/>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button class="btn blue" id="login" type="submit">
+                登录
+            </button>
+
+            <button class="btn green" id="register" type="submit">
+                注册
+            </button>
+        </div>
+
+    </div>
+
+</body>
+
+<script>
+    jQuery(document).ready(function(){
+        //绑定register的click事件
+        $("#register").on("click",function () {
+            window.location.href = "getOtp.html";
+        });
+        //绑定login的click事件
+       $("#login").on("click",function () {
+           // 变量前记得打#
+           var telphone = $("#telphone").val();
+           var passwd = $("#passwd").val();
+       //     if(telphone == null || telphone == ""){
+       //         alert("手机号不能为空")
+       //         return false;
+       //     }
+       //     //后端的正则为^\\d{11}$
+       //     var re = /^\d{11}$/;
+       //     if(!re.test(telphone)){
+       //         alert("手机号不合法")
+       //         return false;
+       //     }
+           $.ajax({
+               type:"POST",
+               // contentType:"application/json",
+               contentType:"application/x-www-form-urlencoded",
+               url:"http://localhost:8090/user/login",
+               data:{
+                   "telphone":telphone,
+                   "passwd":passwd
+               },
+               //前端跨域请求
+               xhrFields:{withCredentials:true},
+               success:function (data) {
+                   if(data.success){
+                       alert("登录成功");
+                       var prevLink = document.referrer;
+                       if($.trim(prevLink)==''){
+                           location.href = 'getItemList.html';
+                       }else{
+                           // if(prevLink.indexOf('www.example.com')==-1){    //来自其它站点
+                           //     location.href = 'getItemList.html';
+                           // }
+                           if(prevLink.indexOf('register.html')!=-1){      //来自注册页面
+                               location.href = 'getItemList.html';
+                           }
+                           location.href = prevLink;
+                       }
+                   }else {
+                       alert("登录失败，原因为" + data.data.errorMsg);
+                   }
+               },
+               error:function (data) {
+                   alert("未登录，原因为" + data.responseJSON.data.errorMessages);
+                   // alert("未注册，原因为" + "http://localhost:8090/user/register?otpCode="+otpCode);
+               }
+           });
+           return false;
+       });
+    });
+</script>
+
+</html>
