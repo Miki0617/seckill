@@ -1,0 +1,17 @@
+0429
+Q: 单个参数校验加上@Validated 请求失效
+A: 单个参数校验先不做，先尝试对象(多个参数集合)校验
+
+0430
+Q: 前端data通过ajax请求无法传递到后端（通过postman可以传）
+A: 将@CrossOrigin中的allowedHeaders = "*"（之前手误写为true）
+
+0506
+Q: Required String parameter 'telphone' is not present
+A: @RequestParam 的参数 name 误写成 value
+
+0507
+Q: 当varchar存入中文时，存储为？？？
+A: application.yml中修改jdbc:mysql://127.0.0.1:3306/数据库名?characterEncoding=UTF-8
+
+Q: BeanUtils.copyProperties拷贝时无法忽略相同属性，加上了

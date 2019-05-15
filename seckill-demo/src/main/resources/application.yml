@@ -1,0 +1,53 @@
+server:
+  # 启动端口配置
+  port: 8090
+
+mybatis:
+  # Mybatis配置
+  config-location: classpath:mybatis-config.xml
+  # mapper路径配置
+  mapper-locations: classpath:mapper/*.xml
+  # 扫描DO包,使用别名
+  type-aliases-package: com.demo.seckill.domain
+
+spring:
+  datasource:
+    # 数据库配置
+    name: seckill
+    url: jdbc:mysql://127.0.0.1:3306/seckill?characterEncoding=UTF-8
+    #&useLegacyDatetimeCode=false&serverTimezone=GMT
+    username: root
+
+    # Druid连接
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    druid:
+       # 属性类型是字符串，通过别名的方式配置扩展插件，常用的插件有：
+          #监控统计用的filter:stat
+          #日志用的filter:log4j
+          #防御sql注入的filter:wall
+       filters: stat,wall
+       # 初始化时建立物理连接的个数
+       initial-size: 5
+       # 最大连接池数量
+       max-active: 20
+       # 获取连接时最大等待时间
+       max-wait: 10000
+       # 最小连接池数量
+       min-idle: 5
+       # 申请连接时执行validationQuery检测连接是否有效
+       test-on-borrow: true
+       # 归还连接时执行validationQuery检测连接是否有效
+       test-on-return: true
+       # 申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效
+       test-while-idle: true
+       # 用来检测连接是否有效的sql，要求是一个查询语句，常用select 'x'
+       validation-query: select 1
+       # 检测连接是否有效的超时时间
+       validation-query-timeout: 2
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+
+

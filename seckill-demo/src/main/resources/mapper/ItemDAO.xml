@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.seckill.dao.ItemDAO">
+  <resultMap id="BaseResultMap" type="com.demo.seckill.domain.ItemDO">
+    <id column="item_id" jdbcType="INTEGER" property="itemId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="detail" jdbcType="VARCHAR" property="detail" />
+    <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="sale" jdbcType="INTEGER" property="sale" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    item_id, title, detail, img_url, price, sale
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from item
+    where item_id = #{itemId,jdbcType=INTEGER}
+  </select>
+  <select id="selectItemList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from item order by sale DESC;
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from item
+    where item_id = #{itemId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.demo.seckill.domain.ItemDO" keyProperty="itemId" useGeneratedKeys="true">
+    insert into item (item_id, title, detail, 
+      img_url, price, sale
+      )
+    values (#{itemId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{detail,jdbcType=VARCHAR}, 
+      #{imgUrl,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, #{sale,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.demo.seckill.domain.ItemDO" keyProperty="itemId" useGeneratedKeys="true">
+    insert into item
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="itemId != null">
+        item_id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="detail != null">
+        detail,
+      </if>
+      <if test="imgUrl != null">
+        img_url,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="sale != null">
+        sale,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="itemId != null">
+        #{itemId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null">
+        #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null">
+        #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="sale != null">
+        #{sale,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.demo.seckill.domain.ItemDO">
+    update item
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null">
+        detail = #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null">
+        img_url = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="sale != null">
+        sale = #{sale,jdbcType=INTEGER},
+      </if>
+    </set>
+    where item_id = #{itemId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.demo.seckill.domain.ItemDO">
+    update item
+    set title = #{title,jdbcType=VARCHAR},
+      detail = #{detail,jdbcType=VARCHAR},
+      img_url = #{imgUrl,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DOUBLE},
+      sale = #{sale,jdbcType=INTEGER}
+    where item_id = #{itemId,jdbcType=INTEGER}
+  </update>
+  <!-- 加销量 -->
+  <update id="increaseSale">
+    update
+      item
+    set
+      sale = sale + #{amount}
+    where item_id = #{itemId}
+  </update>
+</mapper>

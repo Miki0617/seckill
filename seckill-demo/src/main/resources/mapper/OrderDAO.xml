@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.seckill.dao.OrderDAO">
+  <resultMap id="BaseResultMap" type="com.demo.seckill.domain.OrderDO">
+    <id column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="promo_id" jdbcType="INTEGER" property="promoId" />
+    <result column="item_id" jdbcType="INTEGER" property="itemId" />
+    <result column="amount" jdbcType="INTEGER" property="amount" />
+    <result column="item_price" jdbcType="DOUBLE" property="itemPrice" />
+    <result column="order_price" jdbcType="DOUBLE" property="orderPrice" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="state" jdbcType="TINYINT" property="state" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    order_id, user_id, promo_id, item_id, amount, item_price, order_price, create_time, 
+    state
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from order_info
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from order_info
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.demo.seckill.domain.OrderDO">
+    insert into order_info (order_id, user_id, promo_id, 
+      item_id, amount, item_price, 
+      order_price, create_time, state
+      )
+    values (#{orderId,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}, #{promoId,jdbcType=INTEGER}, 
+      #{itemId,jdbcType=INTEGER}, #{amount,jdbcType=INTEGER}, #{itemPrice,jdbcType=DOUBLE}, 
+      #{orderPrice,jdbcType=DOUBLE}, #{createTime,jdbcType=TIMESTAMP}, #{state,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.demo.seckill.domain.OrderDO">
+    insert into order_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="promoId != null">
+        promo_id,
+      </if>
+      <if test="itemId != null">
+        item_id,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="itemPrice != null">
+        item_price,
+      </if>
+      <if test="orderPrice != null">
+        order_price,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="promoId != null">
+        #{promoId,jdbcType=INTEGER},
+      </if>
+      <if test="itemId != null">
+        #{itemId,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="itemPrice != null">
+        #{itemPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="orderPrice != null">
+        #{orderPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.demo.seckill.domain.OrderDO">
+    update order_info
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="promoId != null">
+        promo_id = #{promoId,jdbcType=INTEGER},
+      </if>
+      <if test="itemId != null">
+        item_id = #{itemId,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="itemPrice != null">
+        item_price = #{itemPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="orderPrice != null">
+        order_price = #{orderPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=TINYINT},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.demo.seckill.domain.OrderDO">
+    update order_info
+    set user_id = #{userId,jdbcType=BIGINT},
+      promo_id = #{promoId,jdbcType=INTEGER},
+      item_id = #{itemId,jdbcType=INTEGER},
+      amount = #{amount,jdbcType=INTEGER},
+      item_price = #{itemPrice,jdbcType=DOUBLE},
+      order_price = #{orderPrice,jdbcType=DOUBLE},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=TINYINT}
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </update>
+</mapper>
