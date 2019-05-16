@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.demo</groupId>
-    <artifactId>seckill</artifactId>
+    <artifactId>seckill-demo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>seckill</name>
+    <name>seckill-demo</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
